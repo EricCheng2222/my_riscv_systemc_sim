@@ -13,7 +13,14 @@ SC_MODULE(mux){
 	
 	sc_out<sc_uint<32> >	out;
 
-	void update(){;}
+	void update(){
+		if(sel.read()==0){
+			out.write( data1.read() );
+		}
+		else{
+			out.write( data2.read() );
+		}
+	}
 
 	SC_CTOR(mux){
 		SC_METHOD(update);

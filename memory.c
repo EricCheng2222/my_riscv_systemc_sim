@@ -11,7 +11,16 @@ SC_MODULE(memory){
 	
 	sc_out<sc_uint<32> >	out;
 
-	void update(){;}
+	sc_uint<32> 			internal_mem[4096];
+
+	void update(){
+		if(wr_en.read()==1){
+			internal_mem[addr<<2].write( data_result.read() );
+		}
+		else{
+			out.write( internal_mem[addr<<2].read() );
+		}
+	}
 
 	SC_CTOR(memory){
 		SC_METHOD(update);

@@ -16,7 +16,17 @@ SC_MODULE(register_file){
 	sc_out<sc_uint<32> >	rs1_data;
 	sc_out<sc_uint<32> >	rs2_data;
 
-	void update(){;}
+	sc_uint<32>				internal_reg[32];
+
+	void update(){
+		if(wr_en.read()==0){
+			rs1_data.write( internal_reg[rs1.read()].read() );
+			rs2_data.write( internal_reg[rs2.read()].read() );
+		}
+		else{
+			internal_reg[ rd.read() ].write( write_back_val.read() );
+		}
+	}
 
 	SC_CTOR(register_file){
 		SC_METHOD(update);

@@ -12,7 +12,31 @@ SC_MODULE(decoder){
 	sc_out<bool>			is_branch;
 
 	void update(){
-		;
+		rs1.write( (inst.read()>>15)%32 );	//32 for 5 bits
+		rs2.write( (inst.read()>>20)%32 );
+		rd.write ( (inst.read()>>7) %32 );
+
+		//the following decides the value of imm, imm_used, is_branch 
+		if(inst.read()%32==0x17){
+			//LUI, AUIPC
+		}
+		else if(inst.read()%128==0x6f){
+			//JAL
+		}
+		else if(inst.read()%128==0x63){
+			//BRANCH
+		}
+		else if(inst.read()%128==0x3){
+			//LOAD
+		}
+		else if(inst.read()%128==0x23){
+			//STORE
+		}
+		else if(inst.read()%128==0x13){
+			//ADDI --> ANDI
+		}
+		
+
 	}
 
 	SC_CTOR(decoder){

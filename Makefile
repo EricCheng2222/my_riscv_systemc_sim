@@ -1,6 +1,6 @@
 
 
-OBJS = hello_world.o sim_main.o core.o decoder.o memory.o register_files.o mux.o
+OBJS = hello_world.o sim_main.o core.o decoder.o memory.o register_files.o mux.o is_larger.o is_equal.o adder.o 
 SRC  = $(wildcard *.c) 
 
 all: sim
