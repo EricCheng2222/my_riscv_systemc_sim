@@ -14,15 +14,17 @@ SC_MODULE(memory){
 	sc_uint<32> 			internal_mem[4096];
 
 	void update(){
+		cout << "updating memory\n";
 		if(wr_en.read()==1){
-			internal_mem[addr<<2].write( data_result.read() );
+			internal_mem[addr.read()<<2] = data_result.read() ;
 		}
 		else{
-			out.write( internal_mem[addr<<2].read() );
+			out.write( internal_mem[addr.read()<<2] );
 		}
 	}
 
 	SC_CTOR(memory){
+		cout << "CONSTRUCTING memory\n";
 		SC_METHOD(update);
 		sensitive<<data_result;
 		sensitive<<addr;

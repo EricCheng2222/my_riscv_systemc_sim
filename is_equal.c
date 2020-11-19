@@ -14,10 +14,12 @@ SC_MODULE(is_equal){
 	sc_out<bool>			result;
 
 	void update(){
+		cout << "IS_EQ updating\n";
 		result.write( rs1.read()==rs2.read() );
 	}
 
 	SC_CTOR(is_equal){
+		cout << "Constructing is_equal\n";
 		SC_METHOD(update);
 		sensitive << rs1;
 		sensitive << rs2;

@@ -19,16 +19,18 @@ SC_MODULE(register_file){
 	sc_uint<32>				internal_reg[32];
 
 	void update(){
+		cout << "updating register files\n";
 		if(wr_en.read()==0){
-			rs1_data.write( internal_reg[rs1.read()].read() );
-			rs2_data.write( internal_reg[rs2.read()].read() );
+			rs1_data.write( internal_reg[rs1.read()] );
+			rs2_data.write( internal_reg[rs2.read()] );
 		}
 		else{
-			internal_reg[ rd.read() ].write( write_back_val.read() );
+			internal_reg[rd.read()] =  write_back_val.read();
 		}
 	}
 
 	SC_CTOR(register_file){
+		cout << "Constructing register file\n";
 		SC_METHOD(update);
 		sensitive<<rs1;
 		sensitive<<rs2;
