@@ -14,8 +14,11 @@ SC_MODULE(adder){
 	sc_out<sc_uint<32> >	result;
 
 	void update(){
+		cout << "Adder: "<< this->name()<<endl;
+		cout << "oprnd1: "<<oprnd1 << " oprnd2:"<<oprnd2<<endl;
 		cout << "Adder Updating Value\n";
 		result.write( oprnd1.read() + oprnd2.read() );
+		cout << endl;
 	}
 
 

@@ -75,9 +75,11 @@ SC_MODULE(CORE){
 		
 	{
 		cout<<"CONSTRUCTING CORE\n";
+		IM.load_mem("/Users/eric/Desktop/my_RISCV_sim/my_testing_c_program/test.bin");
 		ZERO.write(0);
 		FOUR.write(4);
 		FALSE.write(false);
+	
 		PC(clock, PC_IN, PC_OUT);
 		IM(ZERO, PC_OUT, FALSE, IM_OUT);
 		DC(IM_OUT, RS1_ADDR, RS2_ADDR, RD_ADDR, IMM, IMM_KIND, ALU_OP, IS_JUMP, IS_BRANCH, ALU_MUX, MEM_WR, WB_MX_SEL, REG_WB);
@@ -93,6 +95,7 @@ SC_MODULE(CORE){
 		WB_MX(ALU_RESULT, FILE_MEM_OUT, WB_MX_SEL, WB_VAL);
 		B_MX(IS_BRANCH, IS_EQUAL, IS_LARGER, B_MX_OUT);
 		PC_MX(PC_PLUS_4, PC_IF_BRANCH, B_MX_OUT, PC_IN);
+
 	}
 	private:
 		reg               PC;

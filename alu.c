@@ -14,6 +14,7 @@ SC_MODULE(alu){
 		cout << "ALU updating\n";
 		if(op.read()==ADD){
 			//ADD, ADDI
+			cout << "ALU: ADD"<<endl;
 			result = rs1.read() + rs2.read();
 		}
 		else if(op.read()==DONT_CARE){
@@ -55,6 +56,7 @@ SC_MODULE(alu){
 			//SRA, SRAI(Arithmetic Right Shift)
 			result = (rs1.read() >> rs2.read());//should sign ext 
 		}
+		cout << endl;
 	}
 
 	SC_CTOR(alu){

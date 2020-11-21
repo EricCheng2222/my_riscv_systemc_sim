@@ -3,6 +3,7 @@
 
 
 #include "systemc.h"
+#include <stdio.h>
 
 SC_MODULE(memory){
 	sc_in<sc_uint<32> > 	data_result;
@@ -11,16 +12,32 @@ SC_MODULE(memory){
 	
 	sc_out<sc_uint<32> >	out;
 
-	sc_uint<32> 			internal_mem[4096];
+	unsigned int 			internal_mem[4096];
 
 	void update(){
-		cout << "updating memory\n";
+		cout << "updating memory: "<<this->name()<<endl;
+		cout << "addr: " << addr.read()<<endl;
+		cout << "wr_en: "<<wr_en.read()<<endl;
+		cout << "internal_mem: "<<std::hex<<internal_mem[addr.read()>>2]<<endl;
 		if(wr_en.read()==1){
-			internal_mem[addr.read()<<2] = data_result.read() ;
+			internal_mem[addr.read()>>2] = data_result.read() ;
 		}
 		else{
-			out.write( internal_mem[addr.read()<<2] );
+			cout << "writing out: " << std::hex<<internal_mem[addr.read()>>2]<<endl; 
+			out.write( internal_mem[addr.read()>>2] );
 		}
+		cout << endl;
+	}
+
+	void load_mem(char* loc){
+		FILE *fp;
+		fp = fopen(loc, "r");
+		int ite = 0;
+		while(fscanf(fp, "%x", &internal_mem[ite])!=EOF){
+			printf("%d: %x\n", ite, internal_mem[ite]);
+			ite++;
+		}
+		fclose(fp);
 	}
 
 	SC_CTOR(memory){

@@ -22,6 +22,12 @@ SC_MODULE(decoder){
 
 	void update(){
 		cout << "Decoder Updating\n";
+		cout << this->name()<<endl;
+		cout << "Inst: " << inst.read()<<endl;
+		cout << "rs1: " << rs1.read()<<endl;
+		cout << "rs2: " << rs2.read()<<endl;
+		cout << "rd: "  << rd.read()<<endl;
+
 		rs1.write( (inst.read()>>15)%32 );	//32 for 5 bits
 		rs2.write( (inst.read()>>20)%32 );
 		rd.write ( (inst.read()>>7) %32 );
@@ -29,6 +35,7 @@ SC_MODULE(decoder){
 		//the following decides the value of imm, imm_used, is_branch 
 		if(inst.read()%32==0x17){
 			//LUI, AUIPC
+			cout << "LUI/AUIPC decoded" <<endl;
 			is_jump.write(false);
 			imm.write(inst.read()>>12);
 			imm_used.write(0); 			//0 for 20 bits
@@ -89,6 +96,7 @@ SC_MODULE(decoder){
 		}
 		else if(inst.read()%128==0x13){
 			//ADDI --> SRAI
+			cout << "ADDI --> SRAI decoded\n";
 			is_jump.write(false);
 			reg_wb.write(true);
 			imm.write(inst.read()>>12);
@@ -137,13 +145,13 @@ SC_MODULE(decoder){
 				alu_op.write(AND);
 				
 		}
-
+		cout << endl;
 	}
 
 	SC_CTOR(decoder){
 		cout << "Constructing Decoder\n";
 		SC_METHOD(update);
-		sensitive << inst << rs1 << rs2 << rd;
+		sensitive << inst;
 	}
 
 	

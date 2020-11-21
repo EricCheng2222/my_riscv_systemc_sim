@@ -14,13 +14,14 @@ SC_MODULE(mux){
 	sc_out<sc_uint<32> >	out;
 
 	void update(){
-		cout << "updating mux\n";
+		cout << "updating mux: "<<this->name()<<endl;
 		if(sel.read()==1){
 			out.write( data1.read() );
 		}
 		else{
 			out.write( data2.read() );
 		}
+		cout<<endl;
 	}
 
 	SC_CTOR(mux){

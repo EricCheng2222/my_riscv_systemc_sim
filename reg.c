@@ -15,9 +15,11 @@ SC_MODULE(reg){
 	sc_uint<32>				internal_mem;
 
 	void update(){
-		cout << "updating reg\n";
+		cout << "updating reg:"<<this->name()<<endl;
+		cout << "reg updated to:" << in.read()<<endl;
 		internal_mem = in.read();
 		out.write(internal_mem);
+		cout<<endl;
 	}
 
 	SC_CTOR(reg){

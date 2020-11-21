@@ -27,6 +27,7 @@ SC_MODULE(register_file){
 		else{
 			internal_reg[rd.read()] =  write_back_val.read();
 		}
+		cout << endl;
 	}
 
 	SC_CTOR(register_file){
